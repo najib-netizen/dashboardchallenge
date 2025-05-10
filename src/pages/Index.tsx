@@ -1,6 +1,7 @@
 
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Footer from '@/components/Footer';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ const Index = () => {
     navigate('/login');
   }, [navigate]);
 
-  return null; // No need to render anything as we're redirecting
+  return <Footer />; // Show footer while redirecting
 };
 
 export default Index;

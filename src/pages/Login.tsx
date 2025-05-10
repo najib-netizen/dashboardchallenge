@@ -24,7 +24,7 @@ const Login = () => {
   const { login, isAuthenticated } = useAuth();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [selectedRole, setSelectedRole] = useState<UserRole>('admin');
+  const selectedRole: UserRole = 'admin';
   
   const {
     register,
@@ -126,32 +126,7 @@ const Login = () => {
             </Button>
           </form>
 
-          <div className="mt-6 grid grid-cols-3 gap-2">
-            <Button
-              type="button"
-              variant={selectedRole === 'admin' ? 'default' : 'outline'}
-              className={selectedRole === 'admin' ? 'bg-app-green hover:bg-app-green/90' : ''}
-              onClick={() => setSelectedRole('admin')}
-            >
-              Admin
-            </Button>
-            <Button
-              type="button"
-              variant={selectedRole === 'sales' ? 'default' : 'outline'}
-              className={selectedRole === 'sales' ? 'bg-app-red hover:bg-app-red/90' : ''}
-              onClick={() => setSelectedRole('sales')}
-            >
-              Sales
-            </Button>
-            <Button
-              type="button"
-              variant={selectedRole === 'purchases' ? 'default' : 'outline'}
-              className={selectedRole === 'purchases' ? 'bg-app-blue hover:bg-app-blue/90' : ''}
-              onClick={() => setSelectedRole('purchases')}
-            >
-              Purchases
-            </Button>
-          </div>
+          
         </CardContent>
       </Card>
     </div>

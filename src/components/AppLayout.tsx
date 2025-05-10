@@ -21,6 +21,7 @@ import { LogOut } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import Logo from './Logo';
+import Footer from './Footer';
 
 const menuItems = [
   {
@@ -66,68 +67,71 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
 
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full">
-        <Sidebar>
-          <SidebarHeader>
-            <div className="flex items-center px-4 py-2">
-              <Logo />
-            </div>
-          </SidebarHeader>
-          <SidebarContent>
-            <SidebarGroup>
-              <SidebarGroupLabel>Menu</SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {menuItems.map((item) => (
-                    <SidebarMenuItem key={item.path}>
-                      <SidebarMenuButton asChild>
-                        <NavLink
-                          to={item.path}
-                          className={({ isActive }) =>
-                            cn("flex items-center gap-2", isActive && "text-primary font-medium")
-                          }
-                        >
-                          {item.icon}
-                          <span>{item.label}</span>
-                        </NavLink>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-          </SidebarContent>
-          <SidebarFooter>
-            <div className="px-4 py-2 border-t">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <Avatar>
-                    <AvatarImage src={user?.avatar} alt={user?.name} />
-                    <AvatarFallback>{user?.name?.charAt(0) || 'U'}</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="text-sm font-medium">{user?.name}</p>
-                    <p className="text-xs text-muted-foreground capitalize">{user?.role}</p>
-                  </div>
-                </div>
-                <Button variant="ghost" size="icon" onClick={logout} aria-label="Log out">
-                  <LogOut className="h-4 w-4" />
-                </Button>
+       <div className="min-h-screen flex w-full flex-col">
+        <div className="flex flex-1">
+          <Sidebar>
+            <SidebarHeader>
+              <div className="flex items-center px-4 py-2">
+                <Logo />
               </div>
+            </SidebarHeader>
+            <SidebarContent>
+              <SidebarGroup>
+                <SidebarGroupLabel>Menu</SidebarGroupLabel>
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    {menuItems.map((item) => (
+                      <SidebarMenuItem key={item.path}>
+                        <SidebarMenuButton asChild>
+                          <NavLink
+                            to={item.path}
+                            className={({ isActive }) =>
+                              cn("flex items-center gap-2", isActive && "text-primary font-medium")
+                            }
+                          >
+                            {item.icon}
+                            <span>{item.label}</span>
+                          </NavLink>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    ))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </SidebarGroup>
+            </SidebarContent>
+            <SidebarFooter>
+              <div className="px-4 py-2 border-t">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <Avatar>
+                      <AvatarImage src={user?.avatar} alt={user?.name} />
+                      <AvatarFallback>{user?.name?.charAt(0) || 'U'}</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="text-sm font-medium">{user?.name}</p>
+                      <p className="text-xs text-muted-foreground capitalize">{user?.role}</p>
+                    </div>
+                  </div>
+                  <Button variant="ghost" size="icon" onClick={logout} aria-label="Log out">
+                    <LogOut className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            </SidebarFooter>
+          </Sidebar>
+          <main className="flex-1 overflow-auto flex flex-col">
+            <div className="container py-4 md:py-6 space-y-6 flex-1">
+              <div className="flex justify-between items-center">
+                <h1 className="text-2xl font-bold capitalize">
+                  {location.pathname.split('/').pop() || 'Dashboard'}
+                </h1>
+                <SidebarTrigger />
+              </div>
+              {children}
             </div>
-          </SidebarFooter>
-        </Sidebar>
-        <main className="flex-1 overflow-auto">
-          <div className="container py-4 md:py-6 space-y-6">
-            <div className="flex justify-between items-center">
-              <h1 className="text-2xl font-bold capitalize">
-                {location.pathname.split('/').pop() || 'Dashboard'}
-              </h1>
-              <SidebarTrigger />
-            </div>
-            {children}
-          </div>
-        </main>
+            <Footer />
+          </main>
+        </div>
       </div>
     </SidebarProvider>
   );
