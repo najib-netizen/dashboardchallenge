@@ -33,4 +33,4 @@ This project is built with:
 - Tailwind CSS
 
 ## Deployed version
-https://dashboardchallenge.vercel.app/login
+https://dashboardchallenge.vercel.app
