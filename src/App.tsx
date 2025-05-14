@@ -9,6 +9,9 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./pages/Login";
 import Products from "./pages/Products";
 import Dashboard from "./pages/Dashboard";
+import Purchases from "./pages/Purchases";
+import Categories from "./pages/Categories";
+import Sales from "./pages/Sales";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +30,9 @@ const App = () => (
             <Route path="/app" element={<ProtectedRoute />}>
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="products" element={<Products />} />
+              <Route path="purchases" element={<Purchases />} />
+              <Route path="categories" element={<Categories />} />
+              <Route path="sales" element={<Sales />} />
             </Route>
             
             <Route path="*" element={<NotFound />} />

@@ -24,18 +24,20 @@ import Logo from './Logo';
 import Footer from './Footer';
 
 const menuItems = [
-  {
-    label: 'Dashboard',
-    path: '/app/dashboard',
-    icon: <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 13H10V6H4V13ZM4 18H10V15H4V18ZM12 18H18V11H12V18ZM12 6V9H18V6H12Z" fill="currentColor"/>
-    </svg>
-  },
+  
   {
     label: 'Products',
     path: '/app/products',
     icon: <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M17 7L12 2L7 7H3V21H21V7H17ZM10 19H7V16H10V19ZM10 14H7V11H10V14ZM14 19H11V16H14V19ZM14 14H11V11H14V14ZM17 19V16H18V19H17Z" fill="currentColor"/>
+    </svg>
+  },
+  
+  {
+    label: 'Dashboard',
+    path: '/app/dashboard',
+    icon: <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 13H10V6H4V13ZM4 18H10V15H4V18ZM12 18H18V11H12V18ZM12 6V9H18V6H12Z" fill="currentColor"/>
     </svg>
   },
   {
@@ -123,7 +125,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
             <div className="container py-4 md:py-6 space-y-6 flex-1">
               <div className="flex justify-between items-center">
                 <h1 className="text-2xl font-bold capitalize">
-                  {location.pathname.split('/').pop() || 'Dashboard'}
+                  {location.pathname.split('/').pop() || 'DashboardS'}
                 </h1>
                 <SidebarTrigger />
               </div>

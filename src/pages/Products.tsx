@@ -7,12 +7,18 @@ import { useToast } from "@/hooks/use-toast";
 
 // Sample product data
 const initialProducts = [
-  { id: 1, name: 'Big Stout', code: '123454', brand: 'test-brand', price: 2000.00, unit: 'piece', stock: 1199, created: '2025-05-07' },
-  { id: 2, name: 'Coke', code: 'R267734', brand: 'test-brand', price: 500.00, unit: 'piece', stock: 19, created: '2025-05-07' },
-  { id: 3, name: 'LOUNGE EVENTS', code: '4575278', brand: 'Gucci', price: 500000.00, unit: 'kilogram', stock: 0, created: '2025-05-07' },
-  { id: 4, name: 'Furniture', code: '1236597', brand: 'Zara', price: 1500.00, unit: 'piece', stock: 39, created: '2025-05-07' },
-  { id: 5, name: 'floor', code: '124514321334', brand: 'MC Donals', price: 120.00, unit: 'kilogram', stock: 20, created: '2025-05-09' },
-  { id: 6, name: 'hh', code: '9823024', brand: 'Peter England', price: 6000.00, unit: 'piece', stock: 50, created: '2025-05-09' },
+  { id: 1, name: 'Ikawa', code: '454', brand: 'Rwanda Select Coffee', price: 2000.00, unit: 'piece', stock: 250, created: '2025-05-07' },
+  { id: 2, name: 'Fanta Pineapple', code: '734', brand: 'BRALIRWA', price: 500.00, unit: 'piece', stock: 19, created: '2025-05-07' },
+  { id: 3, name: 'Ibitenge', code: '278', brand: 'Kigali Textiles', price: 5000.00, unit: 'meter', stock: 52, created: '2025-05-07' },
+  { id: 4, name: 'Intebe ', code: '597', brand: 'Inzozi Furniture', price: 15000.00, unit: 'piece', stock: 39, created: '2025-05-07' },
+  { id: 5, name: 'Bread', code: '245', brand: 'Kigali Bakery', price: 1200.00, unit: 'piece', stock: 20, created: '2025-05-09' },
+  { id: 6, name: 'Shirts', code: '024', brand: 'Rwanda Clothing', price: 6000.00, unit: 'piece', stock: 50, created: '2025-05-09' },
+  { id: 1, name: 'Big Stout', code: '123', brand: 'Vanilla', price: 2000, unit: 'piece', stock: 11, created: '2025-05-07' },
+  { id: 2, name: 'Coke', code: 'R26', brand: 'Bralirwa', price: 500, unit: 'piece', stock: 19, created: '2025-05-07' },
+  { id: 3, name: 'LOUNGE EVENTS', code: '45', brand: 'Gucci', price: 5000, unit: 'kilogram', stock: 20, created: '2025-05-07' },
+  { id: 4, name: 'Furniture', code: '12', brand: 'Zara', price: 1500, unit: 'piece', stock: 39, created: '2025-05-07' },
+  { id: 5, name: 'Floor', code: 'INGANO23', brand: 'MC Donals', price: 120, unit: 'kilogram', stock: 20, created: '2025-05-09' },
+  { id: 6, name: 'Crystal Entrance Fee', code: '2025', brand: 'Peter Rwanda', price: 2000, unit: 'number', stock: 50, created: '2025-05-09' },
 ];
 
 const Products = () => {
@@ -91,7 +97,7 @@ const Products = () => {
                 <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">NAME</th>
                 <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">CODE</th>
                 <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">BRAND</th>
-                <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">PRICE</th>
+                <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">PRICE (RWF)</th>
                 <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">PRODUCT UNIT</th>
                 <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">IN STOCK</th>
                 <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">CREATED ON</th>
@@ -115,7 +121,7 @@ const Products = () => {
                     </span>
                   </td>
                   <td className="px-4 py-3 text-sm">{product.brand}</td>
-                  <td className="px-4 py-3 text-sm">a {product.price.toFixed(2)}</td>
+                  <td className="px-4 py-3 text-sm">{new Intl.NumberFormat('en-RW', { style: 'currency', currency: 'RWF' }).format(product.price)}</td>
                   <td className="px-4 py-3">
                     <span className="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full">
                       {product.unit}
