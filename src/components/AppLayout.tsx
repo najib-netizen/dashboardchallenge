@@ -46,8 +46,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { useNavigate } from 'react-router-dom';
 
 // Menu items structure with submenus
-const menuItems = [
-  {
+const menuItems = [ {
     label: 'Dashboard',
     path: '/app/dashboard',
     icon: <LayoutDashboard className="w-5 h-5" />,
