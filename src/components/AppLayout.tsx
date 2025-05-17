@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import {
@@ -14,58 +13,115 @@ import {
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuItem,
-  SidebarMenuButton
+  SidebarMenuButton,
+  SidebarMenuSub,
+  SidebarMenuSubItem,
+  SidebarMenuSubButton
 } from '@/components/ui/sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { LogOut } from 'lucide-react';
+import { 
+  LogOut, 
+  ChevronDown, 
+  ChevronRight,
+  LayoutDashboard, 
+  Package, 
+  ShoppingCart, 
+  Truck,
+  BarChart,
+  Users,
+  Settings,
+  Clock,
+  AlertCircle,
+  Search,
+  FileSpreadsheet,
+  PackageCheck,
+  Warehouse,
+  Tags
+} from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import Logo from './Logo';
 import Footer from './Footer';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { useNavigate } from 'react-router-dom';
 
+// Menu items structure with submenus
 const menuItems = [
-  
-  {
-    label: 'Products',
-    path: '/app/products',
-    icon: <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M17 7L12 2L7 7H3V21H21V7H17ZM10 19H7V16H10V19ZM10 14H7V11H10V14ZM14 19H11V16H14V19ZM14 14H11V11H14V14ZM17 19V16H18V19H17Z" fill="currentColor"/>
-    </svg>
-  },
-  
   {
     label: 'Dashboard',
     path: '/app/dashboard',
-    icon: <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 13H10V6H4V13ZM4 18H10V15H4V18ZM12 18H18V11H12V18ZM12 6V9H18V6H12Z" fill="currentColor"/>
-    </svg>
+    icon: <LayoutDashboard className="w-5 h-5" />,
+    submenus: [
+      { label: 'Overview', path: '/app/dashboard' },
+      { label: 'Analytics', path: '/app/dashboard/analytics' },
+      { label: 'Reports', path: '/app/dashboard/reports' }
+    ]
+  },
+  {
+    label: 'Products',
+    path: '/app/products',
+    icon: <Package className="w-5 h-5" />,
+    submenus: [
+      { label: 'All Products', path: '/app/products' },
+      { label: 'Inventory', path: '/app/products/inventory' },
+      { label: 'Tracking', path: '/app/products/tracking' },
+      { label: 'Stock Alerts', path: '/app/products/alerts' }
+    ]
   },
   {
     label: 'Categories',
     path: '/app/categories',
-    icon: <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 2L6.5 11H17.5L12 2ZM5 13L3 21H21L19 13H5Z" fill="currentColor"/>
-    </svg>
+    icon: <Tags className="w-5 h-5" />,
+    submenus: [
+      { label: 'All Categories', path: '/app/categories' },
+      { label: 'Manage Tags', path: '/app/categories/tags' }
+    ]
   },
   {
     label: 'Sales',
     path: '/app/sales',
-    icon: <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M19 18L15 14V15H5V17H15V18L19 14V18ZM5 6H15V7L19 3V7L15 3V4H5V6Z" fill="currentColor"/>
-    </svg>
+    icon: <ShoppingCart className="w-5 h-5" />,
+    submenus: [
+      { label: 'Orders', path: '/app/sales' },
+      { label: 'Invoices', path: '/app/sales/invoices' },
+      { label: 'Customers', path: '/app/sales/customers' },
+      { label: 'Returns', path: '/app/sales/returns' }
+    ]
   },
   {
     label: 'Purchases',
     path: '/app/purchases',
-    icon: <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M7 18C5.9 18 5.01 18.9 5.01 20C5.01 21.1 5.9 22 7 22C8.1 22 9 21.1 9 20C9 18.9 8.1 18 7 18ZM17 18C15.9 18 15.01 18.9 15.01 20C15.01 21.1 15.9 22 17 22C18.1 22 19 21.1 19 20C19 18.9 18.1 18 17 18ZM7.17 14.75L7.2 14.63L8.1 13H15.55C16.3 13 16.96 12.59 17.3 11.97L21.16 4.96L19.42 4H19.41L18.31 6L15.55 11H8.53L8.4 10.73L6.16 6L5.21 4L4.27 2H1V4H3L6.6 11.59L5.25 14.04C5.09 14.32 5 14.65 5 15C5 16.1 5.9 17 7 17H19V15H7.42C7.29 15 7.17 14.89 7.17 14.75Z" fill="currentColor"/>
-    </svg>
+    icon: <Truck className="w-5 h-5" />,
+    submenus: [
+      { label: 'All Purchases', path: '/app/purchases' },
+      { label: 'Suppliers', path: '/app/purchases/suppliers' },
+      { label: 'Orders', path: '/app/purchases/orders' }
+    ]
   }
 ];
 
 export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, logout } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
+  const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
+
+  const toggleSubmenu = (label: string) => {
+    setOpenMenus(prev => ({
+      ...prev,
+      [label]: !prev[label]
+    }));
+  };
+
+  // Check if the current path is in the submenu
+  const isSubmenuActive = (item: typeof menuItems[0]) => {
+    return item.submenus?.some(submenu => location.pathname === submenu.path);
+  };
+
+  // Check if this is the main route for this section
+  const isMainRoute = (path: string) => {
+    return location.pathname === path;
+  };
 
   return (
     <SidebarProvider>
@@ -84,17 +140,55 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
                   <SidebarMenu>
                     {menuItems.map((item) => (
                       <SidebarMenuItem key={item.path}>
-                        <SidebarMenuButton asChild>
-                          <NavLink
-                            to={item.path}
-                            className={({ isActive }) =>
-                              cn("flex items-center gap-2", isActive && "text-primary font-medium")
-                            }
+                        {item.submenus && item.submenus.length > 0 ? (
+                          <Collapsible 
+                            open={openMenus[item.label] || isSubmenuActive(item)}
+                            onOpenChange={() => toggleSubmenu(item.label)}
                           >
-                            {item.icon}
-                            <span>{item.label}</span>
-                          </NavLink>
-                        </SidebarMenuButton>
+                            <CollapsibleTrigger asChild>
+                              <SidebarMenuButton 
+                                className={cn(
+                                  "w-full justify-between",
+                                  (isMainRoute(item.path) || isSubmenuActive(item)) && "text-primary font-medium"
+                                )}
+                              >
+                                <div className="flex items-center gap-2">
+                                  {item.icon}
+                                  <span>{item.label}</span>
+                                </div>
+                                <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
+                              </SidebarMenuButton>
+                            </CollapsibleTrigger>
+                            <CollapsibleContent>
+                              <SidebarMenuSub>
+                                {item.submenus.map((submenu) => (
+                                  <SidebarMenuSubItem key={submenu.path}>
+                                    <SidebarMenuSubButton
+                                      asChild
+                                      isActive={location.pathname === submenu.path}
+                                    >
+                                      <NavLink to={submenu.path}>
+                                        <span>{submenu.label}</span>
+                                      </NavLink>
+                                    </SidebarMenuSubButton>
+                                  </SidebarMenuSubItem>
+                                ))}
+                              </SidebarMenuSub>
+                            </CollapsibleContent>
+                          </Collapsible>
+                        ) : (
+                          <SidebarMenuButton asChild>
+                            <NavLink
+                              to={item.path}
+                              className={({ isActive }) =>
+                                cn("flex items-center gap-2", isActive && "text-primary font-medium")
+                              }
+                            >
+                              {item.icon}
+                              <span>{item.label}</span>
+                            </NavLink>
+                          </SidebarMenuButton>
+                        )}
                       </SidebarMenuItem>
                     ))}
                   </SidebarMenu>

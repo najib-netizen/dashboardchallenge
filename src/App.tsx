@@ -14,6 +14,19 @@ import Categories from "./pages/Categories";
 import Sales from "./pages/Sales";
 import NotFound from "./pages/NotFound";
 
+// Import or add placeholder components for submenus
+const DashboardAnalytics = () => <div>Dashboard Analytics</div>;
+const DashboardReports = () => <div>Dashboard Reports</div>;
+const ProductsInventory = () => <div>Products Inventory</div>;
+const ProductsTracking = () => <div>Products Tracking</div>;
+const ProductsAlerts = () => <div>Products Stock Alerts</div>;
+const CategoriesTags = () => <div>Categories Tags</div>;
+const SalesInvoices = () => <div>Sales Invoices</div>;
+const SalesCustomers = () => <div>Sales Customers</div>;
+const SalesReturns = () => <div>Sales Returns</div>;
+const PurchasesSuppliers = () => <div>Purchases Suppliers</div>;
+const PurchasesOrders = () => <div>Purchases Orders</div>;
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -28,11 +41,31 @@ const App = () => (
             <Route path="/" element={<Navigate to="/login" replace />} />
             
             <Route path="/app" element={<ProtectedRoute />}>
+              {/* Dashboard routes */}
               <Route path="dashboard" element={<Dashboard />} />
+              <Route path="dashboard/analytics" element={<DashboardAnalytics />} />
+              <Route path="dashboard/reports" element={<DashboardReports />} />
+              
+              {/* Products routes */}
               <Route path="products" element={<Products />} />
-              <Route path="purchases" element={<Purchases />} />
+              <Route path="products/inventory" element={<ProductsInventory />} />
+              <Route path="products/tracking" element={<ProductsTracking />} />
+              <Route path="products/alerts" element={<ProductsAlerts />} />
+              
+              {/* Categories routes */}
               <Route path="categories" element={<Categories />} />
+              <Route path="categories/tags" element={<CategoriesTags />} />
+              
+              {/* Sales routes */}
               <Route path="sales" element={<Sales />} />
+              <Route path="sales/invoices" element={<SalesInvoices />} />
+              <Route path="sales/customers" element={<SalesCustomers />} />
+              <Route path="sales/returns" element={<SalesReturns />} />
+              
+              {/* Purchases routes */}
+              <Route path="purchases" element={<Purchases />} />
+              <Route path="purchases/suppliers" element={<PurchasesSuppliers />} />
+              <Route path="purchases/orders" element={<PurchasesOrders />} />
             </Route>
             
             <Route path="*" element={<NotFound />} />
