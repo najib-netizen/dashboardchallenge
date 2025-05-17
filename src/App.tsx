@@ -14,12 +14,17 @@ import Categories from "./pages/Categories";
 import Sales from "./pages/Sales";
 import NotFound from "./pages/NotFound";
 
+// Import products submenu pages
+import ProductsInventory from "./pages/Products/ProductsInventory";
+import ProductsTracking from "./pages/Products/ProductsTracking";
+import ProductsAlerts from "./pages/Products/ProductsAlerts";
+
+
 // Import or add placeholder components for submenus
 const DashboardAnalytics = () => <div>Dashboard Analytics</div>;
 const DashboardReports = () => <div>Dashboard Reports</div>;
-const ProductsInventory = () => <div>Products Inventory</div>;
-const ProductsTracking = () => <div>Products Tracking</div>;
-const ProductsAlerts = () => <div>Products Stock Alerts</div>;
+
+
 const CategoriesTags = () => <div>Categories Tags</div>;
 const SalesInvoices = () => <div>Sales Invoices</div>;
 const SalesCustomers = () => <div>Sales Customers</div>;
