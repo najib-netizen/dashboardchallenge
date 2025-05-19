@@ -48,7 +48,7 @@ const DashboardAnalytics = () => {
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row justify-between items-start gap-4">
         <div>
-          <h1 className="text-2xl font-bold">Analytics Dashboard</h1>
+          
           <p className="text-muted-foreground">Detailed performance metrics and trends</p>
         </div>
         <div className="flex gap-2">
