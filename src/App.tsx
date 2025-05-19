@@ -27,14 +27,11 @@ import CategoriesTags from "./pages/Categories/CategoriesTags";
 import SalesInvoices from "./pages/Sales/SalesInvoice";
 import SalesCustomers from "./pages/Sales/SalesCustomers";
 import SalesReturns from "./pages/Sales/SalesReturns";
+// Import purchases submenu pages
+import PurchasesSuppliers from "./pages/Purchases/PurchasesSuppliers";
+import PurchasesOrders from "./pages/Purchases/PurchasesOrders";
 // Import or add placeholder components for submenus
 
-
-
-
-
-const PurchasesSuppliers = () => <div>Purchases Suppliers</div>;
-const PurchasesOrders = () => <div>Purchases Orders</div>;
 
 const queryClient = new QueryClient();
 
