@@ -21,6 +21,8 @@ import ProductsAlerts from "./pages/Products/ProductsAlerts";
 // Import dashboard submenu pages
 import DashboardAnalytics from "./pages/Dashboard/DashboardAnalytics";
 import DashboardReports from "./pages/Dashboard/DashboardReports";
+// Import categories submenu pages
+import CategoriesTags from "./pages/Categories/CategoriesTags";
 
 
 // Import or add placeholder components for submenus
@@ -28,7 +30,7 @@ import DashboardReports from "./pages/Dashboard/DashboardReports";
 
 
 
-const CategoriesTags = () => <div>Categories Tags</div>;
+
 const SalesInvoices = () => <div>Sales Invoices</div>;
 const SalesCustomers = () => <div>Sales Customers</div>;
 const SalesReturns = () => <div>Sales Returns</div>;
