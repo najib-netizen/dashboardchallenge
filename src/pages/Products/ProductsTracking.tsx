@@ -165,7 +165,7 @@ const ProductsTracking = () => {
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row justify-between items-start gap-4">
         <div>
-          <h1 className="text-2xl font-bold">Product Tracking</h1>
+          
           <p className="text-muted-foreground">Track product movements between locations</p>
         </div>
         <div className="flex gap-2">

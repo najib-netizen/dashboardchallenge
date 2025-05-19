@@ -151,7 +151,7 @@ const DashboardAnalytics = () => {
           <CardDescription>Monthly revenue and profit trends</CardDescription>
         </CardHeader>
         <CardContent>
-          <AspectRatio ratio={16 / 8}>
+          <AspectRatio ratio={9 / 2}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={salesData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" />

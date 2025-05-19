@@ -23,17 +23,16 @@ import DashboardAnalytics from "./pages/Dashboard/DashboardAnalytics";
 import DashboardReports from "./pages/Dashboard/DashboardReports";
 // Import categories submenu pages
 import CategoriesTags from "./pages/Categories/CategoriesTags";
-
-
+// Import sales submenu pages
+import SalesInvoices from "./pages/Sales/SalesInvoice";
+import SalesCustomers from "./pages/Sales/SalesCustomers";
+import SalesReturns from "./pages/Sales/SalesReturns";
 // Import or add placeholder components for submenus
 
 
 
 
 
-const SalesInvoices = () => <div>Sales Invoices</div>;
-const SalesCustomers = () => <div>Sales Customers</div>;
-const SalesReturns = () => <div>Sales Returns</div>;
 const PurchasesSuppliers = () => <div>Purchases Suppliers</div>;
 const PurchasesOrders = () => <div>Purchases Orders</div>;
 
