@@ -18,11 +18,14 @@ import NotFound from "./pages/NotFound";
 import ProductsInventory from "./pages/Products/ProductsInventory";
 import ProductsTracking from "./pages/Products/ProductsTracking";
 import ProductsAlerts from "./pages/Products/ProductsAlerts";
+// Import dashboard submenu pages
+import DashboardAnalytics from "./pages/Dashboard/DashboardAnalytics";
+import DashboardReports from "./pages/Dashboard/DashboardReports";
 
 
 // Import or add placeholder components for submenus
-const DashboardAnalytics = () => <div>Dashboard Analytics</div>;
-const DashboardReports = () => <div>Dashboard Reports</div>;
+
+
 
 
 const CategoriesTags = () => <div>Categories Tags</div>;
