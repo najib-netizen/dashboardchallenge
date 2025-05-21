@@ -30,8 +30,6 @@ import SalesReturns from "./pages/Sales/SalesReturns";
 // Import purchases submenu pages
 import PurchasesSuppliers from "./pages/Purchases/PurchasesSuppliers";
 import PurchasesOrders from "./pages/Purchases/PurchasesOrders";
-// Import or add placeholder components for submenus
-
 
 const queryClient = new QueryClient();
 
