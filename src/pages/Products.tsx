@@ -4,26 +4,39 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { Plus, Search } from "lucide-react";
+import { FormDialog } from "@/components/ui/form-dialog";
+import { ProductForm, ProductFormValues } from "@/pages/Products/ProductForm"; 
+
+// Define the product type to ensure type safety
+interface Product {
+  id: number;
+  name: string;
+  code: string;
+  brand: string;
+  price: number;
+  unit: string;
+  stock: number;
+  created: string;
+}
 
 // Sample product data
-const initialProducts = [
-  { id: 1, name: 'Ikawa', code: '454', brand: 'Rwanda Select Coffee', price: 2000.00, unit: 'piece', stock: 250, created: '2025-05-07' },
-  { id: 2, name: 'Fanta Pineapple', code: '734', brand: 'BRALIRWA', price: 500.00, unit: 'piece', stock: 19, created: '2025-05-07' },
-  { id: 3, name: 'Ibitenge', code: '278', brand: 'Kigali Textiles', price: 5000.00, unit: 'meter', stock: 52, created: '2025-05-07' },
-  { id: 4, name: 'Intebe ', code: '597', brand: 'Inzozi Furniture', price: 15000.00, unit: 'piece', stock: 39, created: '2025-05-07' },
-  { id: 5, name: 'Bread', code: '245', brand: 'Kigali Bakery', price: 1200.00, unit: 'piece', stock: 20, created: '2025-05-09' },
-  { id: 6, name: 'Shirts', code: '024', brand: 'Rwanda Clothing', price: 6000.00, unit: 'piece', stock: 50, created: '2025-05-09' },
-  { id: 1, name: 'Big Stout', code: '123', brand: 'Vanilla', price: 2000, unit: 'piece', stock: 11, created: '2025-05-07' },
-  { id: 2, name: 'Coke', code: 'R26', brand: 'Bralirwa', price: 500, unit: 'piece', stock: 19, created: '2025-05-07' },
-  { id: 3, name: 'LOUNGE EVENTS', code: '45', brand: 'Gucci', price: 5000, unit: 'kilogram', stock: 20, created: '2025-05-07' },
-  { id: 4, name: 'Furniture', code: '12', brand: 'Zara', price: 1500, unit: 'piece', stock: 39, created: '2025-05-07' },
-  { id: 5, name: 'Floor', code: 'INGANO23', brand: 'MC Donals', price: 120, unit: 'kilogram', stock: 20, created: '2025-05-09' },
-  { id: 6, name: 'Crystal Entrance Fee', code: '2025', brand: 'Peter Rwanda', price: 2000, unit: 'number', stock: 50, created: '2025-05-09' },
+const initialProducts: Product[] = [
+  { id: 1, name: 'Ikawa (Coffee)', code: '123454', brand: 'Rwanda Select', price: 2000.00, unit: 'piece', stock: 1199, created: '2025-05-07' },
+  { id: 2, name: 'Fanta Citron', code: 'R267734', brand: 'BRALIRWA', price: 500.00, unit: 'piece', stock: 19, created: '2025-05-07' },
+  { id: 3, name: 'Agatambaro (Fabric)', code: '4575278', brand: 'Kigali Textiles', price: 5000.00, unit: 'meter', stock: 52, created: '2025-05-07' },
+  { id: 4, name: 'Intebe (Chair)', code: '1236597', brand: 'Muhanga Furniture', price: 15000.00, unit: 'piece', stock: 39, created: '2025-05-07' },
+  { id: 5, name: 'Umukate (Bread)', code: '124514321334', brand: 'Kigali Bakery', price: 1200.00, unit: 'piece', stock: 20, created: '2025-05-09' },
+  { id: 6, name: 'Ishati (Shirt)', code: '9823024', brand: 'Rwanda Clothing', price: 6000.00, unit: 'piece', stock: 50, created: '2025-05-09' },
 ];
 
 const Products = () => {
-  const [products, setProducts] = useState(initialProducts);
+  const [products, setProducts] = useState<Product[]>(initialProducts);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
   const { toast } = useToast();
 
   // Filter products based on search term
@@ -34,11 +47,71 @@ const Products = () => {
       product.brand.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleCreateProduct = () => {
-    toast({
-      title: "Feature coming soon",
-      description: "The create product functionality will be available in the next update.",
-    });
+  // Handle create product
+  const handleCreateProduct = (data: ProductFormValues) => {
+    setIsSubmitting(true);
+    
+    // Simulate API request
+    setTimeout(() => {
+      const newProduct: Product = {
+        id: products.length + 1,
+        name: data.name,
+        code: data.code,
+        brand: data.brand,
+        price: data.price,
+        unit: data.unit,
+        stock: data.stock,
+        created: new Date().toISOString().split('T')[0],
+      };
+      
+      setProducts([...products, newProduct]);
+      setIsSubmitting(false);
+      setIsCreateDialogOpen(false);
+      
+      toast({
+        title: "Product created",
+        description: `${data.name} has been added successfully.`,
+      });
+    }, 500);
+  };
+
+  // Handle edit product
+  const handleEditProduct = (data: ProductFormValues) => {
+    if (!currentProduct) return;
+    
+    setIsSubmitting(true);
+    
+    // Simulate API request
+    setTimeout(() => {
+      const updatedProducts = products.map(product => 
+        product.id === currentProduct.id 
+          ? { 
+              ...product,
+              name: data.name,
+              code: data.code,
+              brand: data.brand,
+              price: data.price,
+              unit: data.unit,
+              stock: data.stock
+            }
+          : product
+      );
+      
+      setProducts(updatedProducts);
+      setIsSubmitting(false);
+      setIsEditDialogOpen(false);
+      
+      toast({
+        title: "Product updated",
+        description: `${data.name} has been updated successfully.`,
+      });
+    }, 500);
+  };
+
+  // Open edit dialog
+  const openEditDialog = (product: Product) => {
+    setCurrentProduct(product);
+    setIsEditDialogOpen(true);
   };
 
   return (
@@ -47,6 +120,7 @@ const Products = () => {
         <CardContent className="p-4">
           <div className="flex flex-col sm:flex-row justify-between gap-4">
             <div className="relative w-full sm:w-1/3">
+            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
                 placeholder="Search products..."
@@ -54,35 +128,29 @@ const Products = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <svg
-                className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M11 17C14.3137 17 17 14.3137 17 11C17 7.68629 14.3137 5 11 5C7.68629 5 5 7.68629 5 11C5 14.3137 7.68629 17 11 17Z"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M19 19L15 15"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
+              </div>
             <div className="flex items-center">
-              <Button 
-                className="bg-primary hover:bg-primary/90 ml-auto" 
-                onClick={handleCreateProduct}
-              >
-                Create Product
-              </Button>
+              <FormDialog
+                title="Create New Product"
+                description="Enter the details of the new product."
+                trigger={
+                  <Button className="bg-primary hover:bg-primary/90 ml-auto">
+                    <Plus className="mr-2 h-4 w-4" />
+                    Create Product
+                  </Button>
+                }
+                form={
+                  <ProductForm 
+                    onSubmit={handleCreateProduct}
+                    isSubmitting={isSubmitting}
+                  />
+                }
+                onSubmit={() => {}}
+                submitLabel="Create Product"
+                isSubmitting={isSubmitting}
+                isOpen={isCreateDialogOpen}
+                onOpenChange={setIsCreateDialogOpen}
+              />
             </div>
           </div>
         </CardContent>
@@ -131,7 +199,10 @@ const Products = () => {
                   <td className="px-4 py-3 text-sm text-gray-500">{product.created}</td>
                   <td className="px-4 py-3">
                     <div className="flex space-x-2">
-                      <button className="p-1 text-blue-600 hover:text-blue-800">
+                      <button 
+                        className="p-1 text-blue-600 hover:text-blue-800"
+                        onClick={() => openEditDialog(product)}
+                      >
                         <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17ZM12 9C10.34 9 9 10.34 9 12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12C15 10.34 13.66 9 12 9Z" fill="currentColor"/>
                         </svg>
@@ -157,6 +228,34 @@ const Products = () => {
           </table>
         </div>
       </Card>
+
+      {/* Edit Product Dialog */}
+      {currentProduct && (
+        <FormDialog
+          title="Edit Product"
+          description="Update the details of the product."
+          trigger={<></>} // Empty trigger because we're controlling open state
+          form={
+            <ProductForm
+              defaultValues={{
+                name: currentProduct.name,
+                code: currentProduct.code,
+                brand: currentProduct.brand,
+                price: currentProduct.price,
+                unit: currentProduct.unit,
+                stock: currentProduct.stock,
+              }}
+              onSubmit={handleEditProduct}
+              isSubmitting={isSubmitting}
+            />
+          }
+          onSubmit={() => {}}
+          submitLabel="Update Product"
+          isSubmitting={isSubmitting}
+          isOpen={isEditDialogOpen}
+          onOpenChange={setIsEditDialogOpen}
+        />
+      )}
     </div>
   );
 };
