@@ -10,7 +10,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Form } from "@/components/ui/form";
 import { X } from "lucide-react";
 
 interface FormDialogProps {
@@ -45,19 +44,9 @@ export function FormDialog({
             <DialogTitle>{title}</DialogTitle>
             {description && <DialogDescription>{description}</DialogDescription>}
           </div>
-          <DialogTrigger asChild>
-            
-          </DialogTrigger>
+          
         </DialogHeader>
         {form}
-        <DialogFooter>
-          <DialogTrigger asChild>
-            <Button variant="outline">Cancel</Button>
-          </DialogTrigger>
-          <Button onClick={onSubmit} disabled={isSubmitting}>
-            {isSubmitting ? "Saving..." : submitLabel}
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
