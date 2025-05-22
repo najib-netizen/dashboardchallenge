@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,6 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button";
 
 // Define form validation schema
 const productSchema = z.object({
@@ -145,6 +147,12 @@ export function ProductForm({ defaultValues, onSubmit, isSubmitting = false }: P
               </FormItem>
             )}
           />
+          </div>
+        
+        <div className="flex justify-end space-x-2">
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Saving..." : "Save Product"}
+          </Button>
         </div>
       </form>
     </Form>
