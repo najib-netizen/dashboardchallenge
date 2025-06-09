@@ -4,10 +4,9 @@ import { useLocation, Link } from 'react-router-dom';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Input } from '@/components/ui/input';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
-import { Search, Bell, Settings, LogOut, User, Grid3X3 } from 'lucide-react';
+import { Bell, Settings, LogOut, User, Grid3X3 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import Logo from '../Logo';
 
@@ -15,41 +14,23 @@ const AppHeader = () => {
   const location = useLocation();
   const { user, logout } = useAuth();
 
-  const getPageTitle = () => {
-    const segments = location.pathname.split('/').filter(segment => segment !== 'app');
-    return segments.pop() || 'Dashboard';
-  };
-
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-border shadow-sm">
-      <div className="flex items-center justify-between px-4 h-16">
-        {/* Left Section - Logo, Menu, Search */}
-        <div className="flex items-center space-x-4">
-          <SidebarTrigger />
+      <div className="flex items-center justify-between px-6 h-16 max-w-full">
+        {/* Left Section - Logo, Menu Toggle, Quick Navigation */}
+        <div className="flex items-center space-x-6">
           <div className="flex items-center space-x-3">
             <Logo />
-            <div className="h-6 w-px bg-border" />
-            <h1 className="text-xl font-semibold capitalize hidden md:block">
-              {getPageTitle()}
-            </h1>
+            <SidebarTrigger />
           </div>
-        </div>
-
-        {/* Center Section - Search */}
-        <div className="flex-1 max-w-xl mx-4 hidden md:block">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              placeholder="Search products, orders, customers..."
-              className="pl-10 bg-muted/30 border-0 focus:bg-white focus:ring-1 focus:ring-primary"
-            />
-          </div>
-        </div>
-
-        {/* Right Section - Navigation & User */}
-        <div className="flex items-center space-x-3">
-          {/* Quick Actions */}
-          <div className="hidden lg:flex items-center space-x-2">
+          
+          {/* Quick Navigation Links */}
+          <div className="hidden lg:flex items-center space-x-1">
+            <Link to="/app/dashboard">
+              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+                Dashboard
+              </Button>
+            </Link>
             <Link to="/app/products">
               <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
                 Products
@@ -65,15 +46,25 @@ const AppHeader = () => {
                 Purchases
               </Button>
             </Link>
+          <Link to="/app/categories">
+              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+                Categories
+              </Button>
+            </Link>
           </div>
+        </div>
 
+        {/* Right Section - Notifications & User */}
+        <div className="flex items-center space-x-4">
           {/* Notifications */}
-          <Button variant="ghost" size="icon" className="relative">
-            <Bell className="h-5 w-5" />
-            <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs bg-destructive">
-              3
-            </Badge>
-          </Button>
+          <div className="relative">
+            <Button variant="ghost" size="icon" className="relative">
+              <Bell className="h-5 w-5" />
+              <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs bg-destructive flex items-center justify-center">
+                5
+              </Badge>
+            </Button>
+          </div>
 
           {/* Grid Menu */}
           <DropdownMenu>

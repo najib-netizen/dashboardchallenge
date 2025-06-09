@@ -5,6 +5,7 @@ import Logo from './Logo';
 import Footer from './Footer';
 import SidebarNav from './sidebar/SidebarNav';
 import AppHeader from './layout/AppHeader';
+import PageHeader from './layout/PageHeader';
 
 export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
  return (
@@ -28,6 +29,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
             </SidebarFooter>
           </Sidebar>
           <main className="flex-1 overflow-auto flex flex-col">
+            <PageHeader />
             <div className="container py-4 md:py-6 space-y-6 flex-1">
               
               {children}
