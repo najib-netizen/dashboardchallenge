@@ -22,16 +22,18 @@ const PageHeader = ({ className, children }: PageHeaderProps) => {
   };
 
   return (
-    <div className={`bg-muted/30 border-b px-6 py-4 ${className}`}>
-      <div className="space-y-1">
-        {/* Current Page Title */}
-        <h1 className="text-2xl font-semibold">{getPageTitle()}</h1>
-        {/* Breadcrumbs */}
-        <div className="text-sm text-muted-foreground">
-          {getBreadcrumbs().join(' / ') || 'Dashboard'}
+    <div className={`fixed top-16 left-0 right-0 z-40 bg-muted/30 backdrop-blur-sm border-b border-border px-6 py-3 ${className}`}>
+      <div className="flex items-center justify-between">
+        <div className="space-y-1">
+          {/* Current Page Title */}
+          <h1 className="text-lg font-semibold text-foreground">{getPageTitle()}</h1>
+          {/* Breadcrumbs */}
+          <div className="text-xs text-muted-foreground">
+            {getBreadcrumbs().join(' / ') || 'Dashboard'}
+          </div>
         </div>
+        {children}
       </div>
-      {children}
     </div>
   );
 };

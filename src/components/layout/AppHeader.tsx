@@ -1,56 +1,55 @@
 
 import React from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
-import { Bell, Settings, LogOut, User, Grid3X3 } from 'lucide-react';
+import { Bell, Settings, LogOut, User, ChevronRight } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import Logo from '../Logo';
 
+// Helper function to get page title from route
+const getPageTitle = (pathname: string) => {
+  const routes = {
+    '/app/dashboard': { main: 'Dashboard', sub: 'Overview' },
+    '/app/dashboard/analytics': { main: 'Dashboard', sub: 'Analytics' },
+    '/app/dashboard/reports': { main: 'Dashboard', sub: 'Reports' },
+    '/app/products': { main: 'Products', sub: 'All Products' },
+    '/app/products/inventory': { main: 'Products', sub: 'Inventory' },
+    '/app/products/tracking': { main: 'Products', sub: 'Tracking' },
+    '/app/products/alerts': { main: 'Products', sub: 'Stock Alerts' },
+    '/app/categories': { main: 'Categories', sub: 'All Categories' },
+    '/app/categories/tags': { main: 'Categories', sub: 'Manage Tags' },
+    '/app/sales': { main: 'Sales', sub: 'Orders' },
+    '/app/sales/invoices': { main: 'Sales', sub: 'Invoices' },
+    '/app/sales/customers': { main: 'Sales', sub: 'Customers' },
+    '/app/sales/returns': { main: 'Sales', sub: 'Returns' },
+    '/app/purchases': { main: 'Purchases', sub: 'All Purchases' },
+    '/app/purchases/suppliers': { main: 'Purchases', sub: 'Suppliers' },
+    '/app/purchases/orders': { main: 'Purchases', sub: 'Orders' },
+  };
+
+  return routes[pathname as keyof typeof routes] || { main: 'Dashboard', sub: 'Overview' };
+};
+
 const AppHeader = () => {
-  const location = useLocation();
   const { user, logout } = useAuth();
+  const location = useLocation();
+  const { main, sub } = getPageTitle(location.pathname);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-border shadow-sm">
-      <div className="flex items-center justify-between px-6 h-16 max-w-full">
-        {/* Left Section - Logo, Menu Toggle, Quick Navigation */}
-        <div className="flex items-center space-x-6">
-          <div className="flex items-center space-x-3">
-            <Logo />
-            <SidebarTrigger />
-          </div>
-          
-          {/* Quick Navigation Links */}
-          <div className="hidden lg:flex items-center space-x-1">
-            <Link to="/app/dashboard">
-              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                Dashboard
-              </Button>
-            </Link>
-            <Link to="/app/products">
-              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                Products
-              </Button>
-            </Link>
-            <Link to="/app/sales">
-              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                Sales
-              </Button>
-            </Link>
-            <Link to="/app/purchases">
-              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                Purchases
-              </Button>
-            </Link>
-          <Link to="/app/categories">
-              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                Categories
-              </Button>
-            </Link>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background border-b border-border shadow-sm">
+      <div className="flex items-center justify-between px-6 h-14">
+        {/* Left Section - Logo, Menu Toggle and Current Page */}
+        <div className="flex items-center space-x-4">
+          <Logo />
+          <SidebarTrigger />
+          <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+            <span className="font-medium text-foreground">{main}</span>
+            <ChevronRight className="h-4 w-4" />
+            <span>{sub}</span>
           </div>
         </div>
 
@@ -58,52 +57,21 @@ const AppHeader = () => {
         <div className="flex items-center space-x-4">
           {/* Notifications */}
           <div className="relative">
-            <Button variant="ghost" size="icon" className="relative">
-              <Bell className="h-5 w-5" />
-              <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs bg-destructive flex items-center justify-center">
-                5
+            <Button variant="ghost" size="icon" className="relative h-9 w-9 hover:bg-muted">
+              <Bell className="h-4 w-4" />
+              <Badge className="absolute -top-1 -right-1 h-4 w-4 rounded-full p-0 text-xs bg-destructive flex items-center justify-center text-destructive-foreground">
+                3
               </Badge>
             </Button>
           </div>
 
-          {/* Grid Menu */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Grid3X3 className="h-5 w-5" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48">
-              <DropdownMenuItem asChild>
-                <Link to="/app/dashboard" className="flex items-center">
-                  <span>Dashboard</span>
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/app/categories" className="flex items-center">
-                  <span>Categories</span>
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/app/products/inventory" className="flex items-center">
-                  <span>Inventory</span>
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/app/sales/customers" className="flex items-center">
-                  <span>Customers</span>
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
           {/* User Profile Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-                <Avatar className="h-10 w-10">
+              <Button variant="ghost" className="relative h-9 w-9 rounded-full p-0 hover:bg-muted">
+                <Avatar className="h-9 w-9">
                   <AvatarImage src={user?.avatar} alt={user?.name} />
-                  <AvatarFallback className="bg-primary text-primary-foreground">
+                  <AvatarFallback className="bg-primary text-primary-foreground text-sm">
                     {user?.name?.charAt(0) || 'A'}
                   </AvatarFallback>
                 </Avatar>
