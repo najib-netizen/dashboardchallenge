@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
+import { ThemeProvider } from "./contexts/ThemeContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./pages/Login";
 import Products from "./pages/Products";
@@ -35,53 +36,50 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/" element={<Navigate to="/login" replace />} />
-            
-            <Route path="/app" element={<ProtectedRoute />}>
-              {/* Dashboard routes */}
-              <Route path="dashboard" element={<Dashboard />} />
-              <Route path="dashboard/analytics" element={<DashboardAnalytics />} />
-              <Route path="dashboard/reports" element={<DashboardReports />} />
+    <ThemeProvider>
+      <AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/" element={<Navigate to="/login" replace />} />
               
-              {/* Products routes */}
-              <Route path="products" element={<Products />} />
-              <Route path="products/inventory" element={<ProductsInventory />} />
-              <Route path="products/tracking" element={<ProductsTracking />} />
-              <Route path="products/alerts" element={<ProductsAlerts />} />
+              <Route path="/app" element={<ProtectedRoute />}>
+                {/* Dashboard routes */}
+                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="dashboard/analytics" element={<DashboardAnalytics />} />
+                <Route path="dashboard/reports" element={<DashboardReports />} />
+                
+                {/* Products routes */}
+                <Route path="products" element={<Products />} />
+                <Route path="products/inventory" element={<ProductsInventory />} />
+                <Route path="products/tracking" element={<ProductsTracking />} />
+                <Route path="products/alerts" element={<ProductsAlerts />} />
+                
+                {/* Categories routes */}
+                <Route path="categories" element={<Categories />} />
+                <Route path="categories/tags" element={<CategoriesTags />} />
+                
+                {/* Sales routes */}
+                <Route path="sales" element={<Sales />} />
+                <Route path="sales/invoices" element={<SalesInvoices />} />
+                <Route path="sales/customers" element={<SalesCustomers />} />
+                <Route path="sales/returns" element={<SalesReturns />} />
+                
+                {/* Purchases routes */}
+                <Route path="purchases" element={<Purchases />} />
+                <Route path="purchases/suppliers" element={<PurchasesSuppliers />} />
+                <Route path="purchases/orders" element={<PurchasesOrders />} />
+              </Route>
               
-              {/* Categories routes */}
-              <Route path="categories" element={<Categories />} />
-              <Route path="categories/tags" element={<CategoriesTags />} />
-              
-              {/* Sales routes */}
-              <Route path="sales" element={<Sales />} />
-              <Route path="sales/invoices" element={<SalesInvoices />} />
-              <Route path="sales/customers" element={<SalesCustomers />} />
-              <Route path="sales/returns" element={<SalesReturns />} />
-              
-              {/* Purchases routes */}
-              <Route path="purchases" element={<Purchases />} />
-              <Route path="purchases/suppliers" element={<PurchasesSuppliers />} />
-              <Route path="purchases/orders" element={<PurchasesOrders />} />
-            </Route>
-            
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-
-
-
-
-        
-      </TooltipProvider>
-    </AuthProvider>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </AuthProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 

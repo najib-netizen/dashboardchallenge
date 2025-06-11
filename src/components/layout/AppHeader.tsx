@@ -6,8 +6,10 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
-import { Bell, Settings, LogOut, User, ChevronRight } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
+import { Bell, Settings, LogOut, User, ChevronRight, Moon, Sun } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useTheme } from '@/contexts/ThemeContext';
 import Logo from '../Logo';
 
 // Helper function to get page title from route
@@ -36,6 +38,7 @@ const getPageTitle = (pathname: string) => {
 
 const AppHeader = () => {
   const { user, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   const { main, sub } = getPageTitle(location.pathname);
 
@@ -60,7 +63,7 @@ const AppHeader = () => {
             <Button variant="ghost" size="icon" className="relative h-9 w-9 hover:bg-muted">
               <Bell className="h-4 w-4" />
               <Badge className="absolute -top-1 -right-1 h-4 w-4 rounded-full p-0 text-xs bg-destructive flex items-center justify-center text-destructive-foreground">
-                3
+                6
               </Badge>
             </Button>
           </div>
@@ -95,6 +98,20 @@ const AppHeader = () => {
                 <span>Settings</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
+              <div className="flex items-center justify-between px-2 py-1.5">
+                <div className="flex items-center">
+                  {theme === 'dark' ? (
+                    <Moon className="mr-2 h-4 w-4" />
+                  ) : (
+                    <Sun className="mr-2 h-4 w-4" />
+                  )}
+                  <span className="text-sm">Dark mode</span>
+                </div>
+                <Switch
+                  checked={theme === 'dark'}
+                  onCheckedChange={toggleTheme}
+                />
+              </div>
               <DropdownMenuItem onClick={logout} className="text-destructive">
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Log out</span>

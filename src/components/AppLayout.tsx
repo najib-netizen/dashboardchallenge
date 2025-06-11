@@ -9,9 +9,9 @@ import AppHeader from './layout/AppHeader';
 export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
  return (
     <SidebarProvider>
-       <div className="min-h-screen flex w-full flex-col">
+       <div className="min-h-screen flex w-full flex-col bg-background">
         <AppHeader />
-        <div className="flex flex-1 pt-14">
+        <div className="flex flex-1 pt-14 bg-background">
           <Sidebar>
             <SidebarHeader>
               <div className="flex items-center px-4 py-2">
@@ -27,7 +27,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
               </div>
             </SidebarFooter>
           </Sidebar>
-          <main className="flex-1 overflow-auto flex flex-col">
+          <main className="flex-1 overflow-auto flex flex-col bg-background">
             <div className="container py-4 md:py-6 space-y-6 flex-1">
               
               {children}
