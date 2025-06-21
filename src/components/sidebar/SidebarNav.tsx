@@ -11,7 +11,8 @@ import {
   SidebarMenuButton,
   SidebarMenuSub,
   SidebarMenuSubItem,
-  SidebarMenuSubButton
+  SidebarMenuSubButton,
+  useSidebar
 } from '@/components/ui/sidebar';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -86,6 +87,7 @@ interface SidebarNavProps {
 const SidebarNav = ({ className }: SidebarNavProps) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { isMobile, setOpenMobile } = useSidebar();
   const [openMenu, setOpenMenu] = useState<string | null>(null);
 
   // Automatically open the section that matches the current path
@@ -121,6 +123,10 @@ const SidebarNav = ({ className }: SidebarNavProps) => {
   // Handle click on a menu item or submenu item
   const handleNavigation = (path: string) => {
     navigate(path);
+    // Close mobile sidebar after navigation on mobile devices
+    if (isMobile) {
+      setOpenMobile(false);
+    }
   };
 
   return (
@@ -158,7 +164,16 @@ const SidebarNav = ({ className }: SidebarNavProps) => {
                             asChild
                             isActive={location.pathname === submenu.path}
                           >
-                            <NavLink to={submenu.path} end>
+                            <NavLink 
+                              to={submenu.path} 
+                              end
+                              onClick={() => {
+                                // Close mobile sidebar when submenu is clicked
+                                if (isMobile) {
+                                  setOpenMobile(false);
+                                }
+                              }}
+                            >
                               <span>{submenu.label}</span>
                             </NavLink>
                           </SidebarMenuSubButton>
