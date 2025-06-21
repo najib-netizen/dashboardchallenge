@@ -86,7 +86,7 @@ interface SidebarNavProps {
 const SidebarNav = ({ className }: SidebarNavProps) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
 
   // Automatically open the section that matches the current path
   useEffect(() => {
@@ -98,18 +98,14 @@ const SidebarNav = ({ className }: SidebarNavProps) => {
     );
     
     if (activeSection) {
-      setOpenMenus(prev => ({
-        ...prev,
-        [activeSection.label]: true
-      }));
+      setOpenMenu(activeSection.label);
     }
   }, [location.pathname]);
 
   const toggleSubmenu = (label: string) => {
-    setOpenMenus(prev => ({
-      ...prev,
-      [label]: !prev[label]
-    }));
+    // If the clicked menu is already open, close it
+    // If a different menu is clicked, close the current one and open the new one
+    setOpenMenu(prevOpenMenu => prevOpenMenu === label ? null : label);
   };
 
   // Check if the current path is in the submenu
@@ -136,7 +132,7 @@ const SidebarNav = ({ className }: SidebarNavProps) => {
             <SidebarMenuItem key={item.path}>
               {item.submenus && item.submenus.length > 0 ? (
                 <Collapsible 
-                  open={openMenus[item.label] || isSubmenuActive(item)}
+                  open={openMenu === item.label}
                   onOpenChange={() => toggleSubmenu(item.label)}
                 >
                   <CollapsibleTrigger asChild>
